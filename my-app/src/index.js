@@ -69,7 +69,7 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i] || isTie(this.state.stepNumber)) {
+    if (this.isGameOver(squares, i)) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
@@ -80,6 +80,10 @@ class Game extends React.Component {
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
+  }
+
+  isGameOver(squares, i) {
+    return calculateWinner(squares) || squares[i] || isTie(this.state.stepNumber);
   }
 
   jumpTo(step) {
@@ -95,16 +99,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
 
-    const winner = calculateWinner(current.squares);
-
-    let status;
-    if (winner) {
-      status = 'Winner is: ' + winner;
-    } else if (isTie(this.state.stepNumber)) {
-      status = 'It\'s a draw!';
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
+    let status = this.getStatus(current);
 
     const moves = history.map((step, move) => {
       const desc = move ? 'Go to move # ' + move : 'Go to game start';
@@ -131,6 +126,17 @@ class Game extends React.Component {
         </div>
       </div>
     );
+  }
+
+  getStatus(current) {
+    const winner = calculateWinner(current.squares);
+    if (winner) {
+      return 'Winner is: ' + winner;
+    } else if (isTie(this.state.stepNumber)) {
+      return 'It\'s a draw!';
+    }
+
+    return 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
   }
 }
 
