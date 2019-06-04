@@ -17,8 +17,9 @@ ol, ul {
   margin-bottom: 10px;
 }
 
-.square {
+.square, .square:disabled {
   background: #fff;
+    color: #000;
   border: 1px solid #999;
   float: left;
   font-size: 24px;
@@ -34,6 +35,10 @@ ol, ul {
 
 .square.winning {
     background: #ccffcc;
+}
+
+.square:active {
+    border: 3px solid #2196F3;
 }
 
 .square:focus {

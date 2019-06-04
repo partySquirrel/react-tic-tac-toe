@@ -5,7 +5,11 @@ import './index.css';
 function Square(props) {
   const className = 'square' + (props.winningItem ? ' winning' : '');
   return (
-    <button className="square" onClick={props.onClick} className={className}>
+    <button
+      onClick={props.onClick}
+      className={className}
+      disabled={props.disabled || props.gameOver}
+    >
       {props.value}
     </button>
   );
@@ -28,6 +32,7 @@ class Board extends React.Component {
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
         winningItem={this.props.winningLine.includes(i)}
+        disabled={this.props.squares[i] || this.props.gameOver}
       />
     );
   }
@@ -122,6 +127,7 @@ class Game extends React.Component {
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
             winningLine={result.winningLine}
+            gameOver={result.winner}
           />
         </div>
         <div className="game-info">
