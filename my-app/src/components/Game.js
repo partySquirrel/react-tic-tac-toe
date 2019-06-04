@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Board from './Board';
-import HistoryListItem from './HistoryListItem';
+import HistoryList from "./HistoryList";
 
 class Game extends React.Component {
   constructor(props) {
@@ -56,16 +56,6 @@ class Game extends React.Component {
     const result = calculateWinner(current.squares);
     let status = this.getStatus(result);
 
-    const moves = history.map((step, move) => {
-      const desc = move ? 'Go to move # ' + move : 'Go to game start';
-      return (
-        <HistoryListItem
-          key={move}
-          desc={desc}
-          onClick={() => this.jumpTo(move)}
-        />
-      )
-    });
 
     return (
       <div className="game">
@@ -79,7 +69,11 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+
+          <HistoryList
+            history={history}
+            jumpToMove={(move) => this.jumpTo(move)}
+          />
         </div>
       </div>
     );
