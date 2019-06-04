@@ -12,7 +12,7 @@ function Square(props) {
 
 function HistoryListItem(props) {
   return (
-    <li key={props.move}>
+    <li>
       <button onClick={props.onClick}>
         {props.desc}
       </button>
@@ -107,8 +107,8 @@ class Game extends React.Component {
       const desc = move ? 'Go to move # ' + move : 'Go to game start';
       return (
         <HistoryListItem
+          key={move}
           desc={desc}
-          move={move}
           onClick={() => this.jumpTo(move)}
         />
       )
